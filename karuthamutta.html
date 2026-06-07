@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malayali Dino 2.0 - KaruthaMutta!</title>
+    <!-- Import a fun, hand-drawn comic font from Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Slackside+One&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 80px 40px 60px 40px; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            background-color: #F7F5F0; /* Traditional Kerala Kasavu Cream background */
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; 
+            box-sizing: border-box;
+            position: relative; 
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F7F5F0; /* Traditional Kerala Kasavu Cream background */
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .loader-title {
+            font-family: 'Slackside One', cursive;
+            font-size: 4rem;
+            color: #1B4D22; /* Kerala Banana Leaf Green */
+            text-shadow: 3px 3px 0px #997300; /* Mustard Gold Shadow */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .comic-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #1B4D22; /* Kerala Banana Leaf Green */
+            border-top: 6px solid #997300; /* Mustard Gold */
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-home-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            font-size: 1rem;
+            font-weight: 900;
+            color: #111111;
+            background-color: #ffffff;
+            border: 3px solid #111111; 
+            border-radius: 8px;
+            text-decoration: none; 
+            box-shadow: 4px 4px 0px #111111; 
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .back-home-btn:hover {
+            transform: scale(1.05) translateX(-2px); 
+            background-color: #F7F5F0;
+            box-shadow: 6px 6px 0px #997300; 
+        }
+
+        .main-heading {
+            position: relative;
+            font-family: 'Slackside One', cursive; 
+            font-size: 5rem; 
+            color: #1B4D22; /* Matching Kerala Banana Leaf Green */
+            margin-top: 0;
+            margin-bottom: 75px; 
+            text-align: center;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 4px 4px 0px #997300; /* Mustard Gold Shadow */
+            display: inline-block; 
+        }
+
+        /* Smoother, smaller handwritten underline */
+        .main-heading::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;       
+            left: 25%;          
+            width: 50%;         
+            height: 5px;       
+            background-color: #997300; /* Kerala Gold */
+            border-radius: 100% 20% 80% 30% / 40% 60% 30% 70%; 
+            transform: rotate(-1deg); 
+            filter: url(#handdrawn-smooth); /* Applied the smooth sketch filter */
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 65px; 
+            width: 100%;
+            max-width: 250px; 
+            perspective: 1000px; 
+        }
+
+        .fun-square-btn {
+            aspect-ratio: 1 / 1;    
+            width: 100%;
+            padding: 10px;          
+            font-size: 1.5rem;      
+            font-weight: 900;
+            color: #ffffff;         
+            border: 4px solid #111111; 
+            border-radius: 0px;        
+            cursor: pointer;
+            box-shadow: 8px 8px 0px #111111; 
+            transition: all 0.1s ease-out; 
+            box-sizing: border-box;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-shadow: 2px 2px 0px #111111, -1px -1px 0px #111111, 1px -1px 0px #111111, -1px 1px 0px #111111;
+            
+            background-size: cover;      
+            background-position: center;  
+            background-repeat: no-repeat;
+            background-image: url('image1.jpg'); /* Unchanged button styling */
+        }
+
+        .fun-square-btn:hover { transform: scale(1.1) rotate(3deg); box-shadow: -12px 12px 0px #997300; }
+        .fun-square-btn:active { transform: scale(0.95) rotate(-2deg); box-shadow: 2px 2px 0px #111111; }
+
+        .fun-square-btn:nth-child(1) { background-image:  url('karuthamutta.png'); }
+    </style>
+</head>
+<body>
+
+    <!-- Lightened SVG filter for subtle, organic ink strokes -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="handdrawn-smooth">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <div id="loading-screen">
+        <div class="loader-title">Loading Dino...</div>
+        <div class="comic-spinner"></div>
+    </div>
+
+    <a href="index.html" class="back-home-btn" onclick="triggerBackLoading(event, this.href)">
+        <span>&larr;</span> Back Home
+    </a>
+
+    <h1 class="main-heading">Malayali Dino 2.0</h1>
+
+    <div class="button-grid">
+        <button type="button" class="fun-square-btn" onclick="playLagFreeSound()">PLAY!</button>
+    </div>
+
+<script>
+         const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+        let audioBuffer = null;
+
+        
+        fetch('karuthamutta.mp3')
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
+            .then(decodedData => {
+                audioBuffer = decodedData;
+                
+                setTimeout(() => {
+                    document.getElementById('loading-screen').style.display = 'none';
+                }, 700);
+            })
+            .catch(e => {
+                console.error("Error loading audio file:", e);
+            
+                setTimeout(() => {
+                    document.getElementById('loading-screen').style.display = 'none';
+                }, 700);
+            });
+
+        function playLagFreeSound() {
+            if (!audioBuffer) return;
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+            const soundNode = audioCtx.createBufferSource();
+            soundNode.buffer = audioBuffer;
+            soundNode.connect(audioCtx.destination);
+            soundNode.start(0);
+        }
+
+        function triggerBackLoading(event, targetUrl) {
+            event.preventDefault();
+            document.getElementById('loading-screen').style.display = 'flex'; 
+
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 700);
+        }    
+        </script>
+</body>
+</html>

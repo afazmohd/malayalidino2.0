@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malayali Dino 2.0</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+         
+    <style>
+        body {
+            margin: 0;
+            padding: 60px 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            background-color: #F7F5F0; /* Traditional Kerala Kasavu Cream background */
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; 
+            box-sizing: border-box;
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F7F5F0;
+            display: none; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        #loading-screen.show {
+            display: flex; 
+        }
+        
+        .loader-title {
+            font-family: 'Slackside One', cursive;
+            font-size: 4rem;
+            color: #1B4D22; /* Kerala Banana Leaf Green */
+            text-shadow: 3px 3px 0px #997300; /* Mustard Gold Shadow */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+             
+        .comic-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #1B4D22; /* Kerala Banana Leaf Green */
+            border-top: 6px solid #997300;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .main-heading {
+            position: relative;
+            font-family: 'Slackside One', cursive; 
+            font-size: 5rem; 
+            color: #1B4D22; /* Matching Kerala Banana Leaf Green */
+            margin-top: 0;
+            margin-bottom: 75px; 
+            text-align: center;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 4px 4px 0px #997300; /* Mustard Gold Shadow */
+            display: inline-block; 
+        }
+
+        /* Smoother, smaller handwritten underline */
+        .main-heading::after {
+            content: "";
+            position: absolute;
+            bottom: -8px; /* Brought closer to the text */
+            left: 25%;    /* Centered more by reducing overall width */
+            width: 50%;   /* Shorter horizontal length */
+            height: 5px;  /* Thinner height */
+            background-color: #997300; 
+            border-radius: 100% 20% 80% 30% / 40% 60% 30% 70%; 
+            transform: rotate(-1deg);
+            filter: url(#handdrawn-smooth); /* Applied a lighter distortion filter */
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 65px; 
+            width: 100%;
+            max-width: 1100px; 
+            perspective: 1000px;
+        }
+
+        .fun-square-btn {
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-shadow: 2px 2px 0px #111111, -1px -1px 0px #111111, 1px -1px 0px #111111, -1px 1px 0px #111111;
+            border: 4px solid #111111; 
+            border-radius: 0px;
+            cursor: pointer;
+            box-shadow: 8px 8px 0px #111111; 
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-sizing: border-box;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #1B4D22; /* Matching Kerala Green Button Color */
+        }
+          
+        .fun-square-btn:nth-child(1) { background-image:  url('faah.png'); } 
+        .fun-square-btn:nth-child(2) { background-image:  url('raju.png'); } 
+        .fun-square-btn:nth-child(3) { background-image:  url('karuthamutta.png'); } 
+        .fun-square-btn:nth-child(4) { background-image:  url('adarsh.png.jpeg'); }
+        .fun-square-btn:nth-child(5) { background-image:  url('image5.jpg'); }
+        .fun-square-btn:nth-child(6) { background-image:  url('image6.jpg'); }
+        .fun-square-btn:nth-child(7) { background-image:  url('image7.jpg'); }
+        .fun-square-btn:nth-child(8) { background-image:  url('image8.jpg'); }
+        .fun-square-btn:nth-child(9) { background-image:  url('image9.jpg'); }
+        .fun-square-btn:nth-child(10) { background-image:  url('image10.jpg'); }
+
+        .fun-square-btn:hover {
+            transform: scale(1.15) rotate(5deg); 
+            box-shadow: -12px 12px 0px #362901;  
+            color: #ffffff;  
+        }
+         
+        .fun-square-btn:active {
+            transform: scale(0.9) rotate(-5deg); 
+            box-shadow: 2px 2px 0px #111111;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Lightened SVG filter for subtle, organic ink strokes -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="handdrawn-smooth">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <!-- Hidden Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-title">Loading...</div>
+        <div class="comic-spinner"></div>
+    </div>
+
+    <!-- Centered Comic-Style Heading -->
+    <h1 class="main-heading">Malayali Dino 2.0</h1>
+
+    <!-- 10 Square Buttons -->
+    <div class="button-grid">
+        <a href="faah.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)"></a>
+        <a href="raju.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)"></a>
+        <a href="karuthamutta.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)"></a>
+        <a href="adarsh.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)"></a>
+        <a href="page5.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)">coming soon!</a>
+        <a href="page6.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)">coming soon!</a>
+        <a href="page7.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)">coming soon!</a>
+        <a href="page8.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)">coming soon!</a>
+        <a href="page9.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)">coming soon!</a>
+        <a href="page10.html" class="fun-square-btn" onclick="triggerLoading(event, this.href)">coming soon!</a>
+    </div>
+
+<script>
+    function triggerLoading(event, targetUrl) {
+        event.preventDefault();  
+        document.getElementById('loading-screen').style.display = 'flex';   
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 700); 
+    }
+</script>
+
+</body>
+</html>
